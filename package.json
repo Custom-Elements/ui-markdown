@@ -1,0 +1,15 @@
+{
+  "name": "ui-sidebar",
+  "version": "0.0.0",
+  "dependencies": {
+    "marked": "^0.3.2",
+    "polymer": "git://github.com/custom-elements/polymer#master",
+    "polymer-build": "",
+    "ui-fonts": "git://github.com/custom-elements/ui-fonts#master",
+    "ui-styles": "git://github.com/custom-elements/ui-styles#master"
+  },
+  "license": "ISC",
+  "scripts": {
+    "test": "polymer-build watch . src/ build/"
+  }
+}
