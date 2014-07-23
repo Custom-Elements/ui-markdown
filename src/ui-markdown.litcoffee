@@ -9,10 +9,12 @@ Layout with converted markdown
 
 ##Attributes and Change Handlers
 
+      url: ''
+
 ##Methods
 
       getMD: ->
-        @$.ajax.url='../README.md'
+        @$.ajax.url=@url
         @$.ajax.go()
 
       getHTML: (evt) ->
