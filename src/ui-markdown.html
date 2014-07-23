@@ -1,3 +1,4 @@
+<link rel="import" href="../lib/core-ajax.html">
 <polymer-element name="ui-markdown">
   <template>
     Test<br/>
@@ -5,6 +6,11 @@
       {{convertedHtml}}
     </convertedContent>
 
+    <core-ajax id="ajax"
+      auto:true
+      on-core-response="{{getHTML}}"
+      handleAs="json">
+    </core-ajax>
   </template>
   <script src="./ui-markdown.litcoffee"></script>
 </polymer-element>

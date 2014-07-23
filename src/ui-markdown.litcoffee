@@ -11,11 +11,16 @@ Layout with converted markdown
 
 ##Methods
 
+      getMD: ->
+        @$.ajax.url='../README.md'
+        @$.ajax.go()
+
+      getHTML: (evt) ->
+        @$.el.innerHTML = marked(evt.detail.response)
+
 ##Event Handlers
 
 ##Polymer Lifecycle
 
-      created: ->
-
       ready: () ->
-        @$.el.innerHTML = marked('asdf')
+        @getMD()
