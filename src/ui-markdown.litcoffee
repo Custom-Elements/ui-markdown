@@ -1,6 +1,8 @@
 #ui-markdown-layout
 Layout with converted markdown
 
+    marked = require 'marked'
+
     Polymer 'ui-markdown',
 
 ##Events
@@ -16,4 +18,4 @@ Layout with converted markdown
       created: ->
 
       ready: () ->
-        @convertedHtml = "Hello World"
+        @$.el.innerHTML = marked('asdf')
