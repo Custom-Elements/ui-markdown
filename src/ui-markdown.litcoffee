@@ -2,31 +2,26 @@
 Layout with converted markdown
 
     marked = require 'marked'
-    promise = require 'promise'
 
     Polymer 'ui-markdown',
 
 ##Events
 
 ##Attributes and Change Handlers
-      
-      mdText: ''
-      promiseArray: []
 
 ##Methods
 
       setURL: ->
+        promiseArray = []
+        mdText = ''
         urlList=@urls.split(' ')
         for url in urlList
           console.log url
-          @promiseArray.push(@makeCall(url))
-        @getPromise().then (responseArray) =>
+          promiseArray.push(@makeCall(url))
+        Promise.all(promiseArray).then (responseArray) =>
           for response in responseArray
-            @setText(response)
-          @getHTML()
-
-      getPromise: ->
-        Promise.all(@promiseArray)
+            mdText+=marked(response)
+          @getHTML(mdText)
 
       makeCall: (url) ->
         new Promise (resolve, reject) =>
@@ -35,11 +30,8 @@ Layout with converted markdown
             callback: (response) ->
               resolve response
 
-      setText: (response) ->
-        @mdText+=marked(response)
-
-      getHTML: () ->
-        @$.el.innerHTML = @mdText
+      getHTML: (mdText) ->
+        @$.el.innerHTML = mdText
 
 ##Event Handlers
 
