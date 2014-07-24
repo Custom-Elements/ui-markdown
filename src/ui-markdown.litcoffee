@@ -18,7 +18,6 @@ Layout with converted markdown
       setURL: ->
         urlList=@urls.split(' ')
         @sections=urlList.length
-        console.log @sections
         for url in urlList
           console.log url
           @makeCall(url).then (text) =>
@@ -32,7 +31,6 @@ Layout with converted markdown
               resolve response
 
       setText: (text) ->
-        console.log text
         @sections--
         @mdText+=marked(text)
         if @sections is 0
