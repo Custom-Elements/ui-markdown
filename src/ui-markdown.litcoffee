@@ -8,21 +8,35 @@ Layout with converted markdown
 ##Events
 
 ##Attributes and Change Handlers
-
-      url: ''
+      
+      mdText: ''
+      sections: 0
 
 ##Methods
 
-      getMD: ->
-        @$.ajax.url=@url
+      setURL: ->
+        urlList=@urls.split(' ')
+        @sections=urlList.length
+        console.log @sections
+        for url in urlList
+          console.log url
+          @$.ajax.url=url
+          @$.ajax.go()
+        
 
-      getHTML: (evt) ->
+      setText: (evt) ->
         console.log evt
-        @$.el.innerHTML = marked(evt.detail.response)
+        @sections--
+        @mdText+=marked(evt.detail.response)
+        if @sections is 0
+          @getHTML()
+
+      getHTML: () ->
+        @$.el.innerHTML = @mdText
 
 ##Event Handlers
 
 ##Polymer Lifecycle
 
       ready: () ->
-        @getMD()
+        @setURL()

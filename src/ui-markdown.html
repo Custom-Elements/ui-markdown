@@ -1,5 +1,5 @@
 <link rel="import" href="../lib/core-ajax.html">
-<polymer-element name="ui-markdown" attributes="url">
+<polymer-element name="ui-markdown" attributes="urls">
   <template>
     Test<br/>
     <convertedContent id="el">
@@ -7,9 +7,7 @@
     </convertedContent>
 
     <core-ajax id="ajax"
-      auto=true
-      sync=true
-      on-core-response="{{getHTML}}"
+      on-core-response="{{setText}}"
       handleAs="text">
     </core-ajax>
   </template>
