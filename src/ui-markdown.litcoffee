@@ -11,17 +11,22 @@ Layout with converted markdown
 ##Attributes and Change Handlers
       
       mdText: ''
-      sections: 0
+      promiseArray: []
 
 ##Methods
 
       setURL: ->
         urlList=@urls.split(' ')
-        @sections=urlList.length
         for url in urlList
           console.log url
-          @makeCall(url).then (text) =>
-            @setText(text)
+          @promiseArray.push(@makeCall(url))
+        @getPromise().then (responseArray) =>
+          for response in responseArray
+            @setText(response)
+          @getHTML()
+
+      getPromise: ->
+        Promise.all(@promiseArray)
 
       makeCall: (url) ->
         new Promise (resolve, reject) =>
@@ -30,11 +35,8 @@ Layout with converted markdown
             callback: (response) ->
               resolve response
 
-      setText: (text) ->
-        @sections--
-        @mdText+=marked(text)
-        if @sections is 0
-          @getHTML()
+      setText: (response) ->
+        @mdText+=marked(response)
 
       getHTML: () ->
         @$.el.innerHTML = @mdText
