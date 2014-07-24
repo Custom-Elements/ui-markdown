@@ -11,13 +11,23 @@ Layout with converted markdown
 
 ##Methods
 
+      checkForNoCyclicDependencies: (url) ->
+        # can also use this.getDestinationInsertionPoints()
+        nestedUrls = @shadowRoot.host.getAttribute 'urls'
+        nestedUrlList = nestedUrls.split ' '
+        found = true
+        for nestedUrl in nestedUrlList
+          if nestedUrl is url
+            found = false
+        return found
+
       setURL: ->
         promiseArray = []
         mdText = ''
         urlList=@urls.split(' ')
         for url in urlList
-          console.log url
-          promiseArray.push(@makeCall(url))
+          if @checkForNoCyclicDependencies(url)
+            promiseArray.push(@makeCall(url))
         Promise.all(promiseArray).then (responseArray) =>
           for response in responseArray
             mdText+=marked(response)
