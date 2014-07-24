@@ -7,9 +7,10 @@
     </convertedContent>
 
     <core-ajax id="ajax"
-      auto:true
+      auto=true
+      sync=true
       on-core-response="{{getHTML}}"
-      handleAs="json">
+      handleAs="text">
     </core-ajax>
   </template>
   <script src="./ui-markdown.litcoffee"></script>

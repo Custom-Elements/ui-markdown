@@ -15,9 +15,9 @@ Layout with converted markdown
 
       getMD: ->
         @$.ajax.url=@url
-        @$.ajax.go()
 
       getHTML: (evt) ->
+        console.log evt
         @$.el.innerHTML = marked(evt.detail.response)
 
 ##Event Handlers

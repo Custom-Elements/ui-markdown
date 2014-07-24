@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="core-xhr.html">
 
-<polymer-element name="core-ajax" attributes="url handleAs auto params response method headers body contentType">
+<polymer-element name="core-ajax" attributes="url handleAs auto params response method headers body contentTypei withCredentials sync">
 
   <script>
 
@@ -168,6 +168,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       contentType: 'application/x-www-form-urlencoded',
 
+      /**
+       * Set the withCredentials flag on the request.
+       * 
+       * @attribute withCredentials
+       * @type boolean
+       * @default false
+       */
+      withCredentials: false,
+
+      /**
+       * Set the sync flag on the request.
+       * 
+       * @attribute sync
+       * @type boolean
+       * @default false
+       */
+      sync: false,
+
       ready: function() {
         this.xhr = document.createElement('core-xhr');
       },
@@ -273,6 +291,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.contentType) {
           args.headers['content-type'] = this.contentType;
         }
+        args.withCredentials = this.withCredentials;
+        args.sync = this.sync;
         args.callback = this.receive.bind(this);
         args.url = this.url;
         args.method = this.method;
