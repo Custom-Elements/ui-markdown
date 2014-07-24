@@ -2,6 +2,7 @@
 Layout with converted markdown
 
     marked = require 'marked'
+    promise = require 'promise'
 
     Polymer 'ui-markdown',
 
@@ -20,14 +21,20 @@ Layout with converted markdown
         console.log @sections
         for url in urlList
           console.log url
-          @$.ajax.url=url
-          @$.ajax.go()
-        
+          @makeCall(url).then (text) =>
+            @setText(text)
 
-      setText: (evt) ->
-        console.log evt
+      makeCall: (url) ->
+        new Promise (resolve, reject) =>
+          @$.xhr.request
+            url: url
+            callback: (response) ->
+              resolve response
+
+      setText: (text) ->
+        console.log text
         @sections--
-        @mdText+=marked(evt.detail.response)
+        @mdText+=marked(text)
         if @sections is 0
           @getHTML()
 

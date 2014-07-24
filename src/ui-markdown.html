@@ -1,4 +1,4 @@
-<link rel="import" href="../lib/core-ajax.html">
+<link rel="import" href="../lib/core-xhr.html">
 <polymer-element name="ui-markdown" attributes="urls">
   <template>
     Test<br/>
@@ -6,10 +6,7 @@
       {{convertedHtml}}
     </convertedContent>
 
-    <core-ajax id="ajax"
-      on-core-response="{{setText}}"
-      handleAs="text">
-    </core-ajax>
+    <core-xhr id="xhr"></core-xhr>
   </template>
   <script src="./ui-markdown.litcoffee"></script>
 </polymer-element>
