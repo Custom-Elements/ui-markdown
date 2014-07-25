@@ -42,14 +42,15 @@ Layout with converted markdown
       setURL: ->
         promiseArray = []
         mdText = ''
-        urlList=@urls.split(' ')
-        for url in urlList
-          if @checkForNoCyclicDependencies(url)
-            promiseArray.push(@makeCall(url))
-        Promise.all(promiseArray).then (responseArray) =>
-          for response in responseArray
-            mdText+=marked(response)
-          @getHTML(mdText)
+        if @urls
+          urlList=@urls.split(' ')
+          for url in urlList
+            if @checkForNoCyclicDependencies(url)
+              promiseArray.push(@makeCall(url))
+          Promise.all(promiseArray).then (responseArray) =>
+            for response in responseArray
+              mdText+=marked(response)
+            @getHTML(mdText)
 
       makeCall: (url) ->
         new Promise (resolve, reject) =>
@@ -66,4 +67,5 @@ Layout with converted markdown
 ##Polymer Lifecycle
 
       ready: () ->
+        @getHTML marked(this.innerHTML)
         @setURL()
