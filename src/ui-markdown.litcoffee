@@ -68,5 +68,7 @@ Layout with converted markdown
 
       ready: () ->
         offset = this.innerHTML.length - this.innerHTML.trimLeft().length
-        @getHTML marked(this.innerHTML.trimLeft())
+        extraWhitespace = this.innerHTML.substr(0,offset)
+        preMarked = this.innerHTML.replace(extraWhitespace,"")
+        @getHTML marked(preMarked)
         @setURL()
