@@ -2,6 +2,7 @@
 Layout with converted markdown
 
     marked = require 'marked'
+    Promise = require('es6-promise').Promise
 
     Polymer 'ui-markdown',
 
@@ -12,14 +13,19 @@ Layout with converted markdown
 ##Methods
 
       checkForNoCyclicDependencies: (url) ->
-        # can also use this.getDestinationInsertionPoints()
-        nestedUrls = @shadowRoot.host.getAttribute 'urls'
-        nestedUrlList = nestedUrls.split ' '
-        found = true
-        for nestedUrl in nestedUrlList
-          if nestedUrl is url
-            found = false
-        return found
+        urlArray = []
+        els = document.querySelectorAll('ui-markdown::shadow #el')
+        for el in els
+          testUrl = el.getAttribute('url')
+          if not testUrl?
+            el.setAttribute('url', url)
+          else
+            urlArray.push(testUrl)
+        for checkUrl in urlArray
+          if checkUrl is url
+            console.log 'cyclic dependency reference with url: ' + url
+            return false
+        return true
 
       setURL: ->
         promiseArray = []
