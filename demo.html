@@ -15,6 +15,30 @@
     </style>
   </head>
   <body>
+
+  <p><strong>Example 1: </strong></p>
+  <ui-markdown urls='./README.md'>
+    __I am inline content__
+		__I am also inline content__
+  </ui-markdown>
+  <br/>
+  <br/>
+
+  <p>
+    <strong>Example 2: </strong>
+    <span>Load README.md, which will in turn load ASWELL.md.  ASWELL.md will attempt to load README.md, but the cyclic dependency check will prevent this loading (and the associated infinite recursion)</span>
+  </p>
   <ui-markdown urls='./README.md'></ui-markdown>
+  <br/>
+  <br/>
+
+  <p>
+    <strong>Example 3: </strong>
+      <span>Load ASWELL.md, which will in turn load README.md.  Note that the cylic dependency check allows this nested README.md to load even though it prevented loading of it in markdown example 2 (the cyclic depndency check only concerns itself with the elements ancestors, not the whole DOM)</span>
+  </p>
+  <ui-markdown urls='./ASWELL.md'></ui-markdown>
+  <br/>
+  <br/>
+
   </body>
 </html>
