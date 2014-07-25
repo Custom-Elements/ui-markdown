@@ -60,12 +60,13 @@ Layout with converted markdown
               resolve response
 
       getHTML: (mdText) ->
-        @$.el.innerHTML = mdText
+        @$.el.innerHTML += mdText
 
 ##Event Handlers
 
 ##Polymer Lifecycle
 
       ready: () ->
-        @getHTML marked(this.innerHTML)
+        offset = this.innerHTML.length - this.innerHTML.trimLeft().length
+        @getHTML marked(this.innerHTML.trimLeft())
         @setURL()
