@@ -12,16 +12,28 @@ Layout with converted markdown
 
 ##Methods
 
+      getNextHigherLevelHost: (element) ->
+        if element is null
+          return null
+        else if element.nodeName is "#document-fragment"
+          return element.host
+        else
+          return @getNextHigherLevelHost(element.parentNode)
+
+      getHigherLevelUrls: (urls, element) ->
+        element = @getNextHigherLevelHost element
+        if element is null
+          return urls
+        else
+          urlString = element.getAttribute 'urls'
+          urls = urls.concat urlString.split(' ')
+          return @getHigherLevelUrls urls, element
+
       checkForNoCyclicDependencies: (url) ->
-        urlArray = []
-        els = document.querySelectorAll('ui-markdown::shadow #el')
-        for el in els
-          testUrl = el.getAttribute('url')
-          if not testUrl?
-            el.setAttribute('url', url)
-          else
-            urlArray.push(testUrl)
-        for checkUrl in urlArray
+        element = @
+        urls = @getHigherLevelUrls [], element
+
+        for checkUrl in urls
           if checkUrl is url
             console.log 'cyclic dependency reference with url: ' + url
             return false
