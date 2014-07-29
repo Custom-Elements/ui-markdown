@@ -12,13 +12,17 @@ Layout with converted markdown
 ##Methods
 
       getNextHigherLevelHost: (element) ->
-        if element is null return null
-        else if element.nodeName is "#document-fragment" return element.host
-        else return @getNextHigherLevelHost element.parentNode
+        if element is null
+          return null
+        else if element.nodeName is "#document-fragment"
+          return element.host
+        else
+          return @getNextHigherLevelHost element.parentNode
 
       getHigherLevelUrls: (urls, element) ->
         element = @getNextHigherLevelHost element
-        if element is null return urls
+        if element is null
+          return urls
         else
           urlString = element.getAttribute 'urls'
           urls = urls.concat urlString.split ' '
