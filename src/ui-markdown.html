@@ -1,7 +1,10 @@
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 <polymer-element name="ui-markdown" attributes="url">
   <template>
-    {{markdown}}
+
+    <content>
+      {{markdown}}
+    </content>
 
     <!-- download the markdown, if specified -->
     <core-ajax

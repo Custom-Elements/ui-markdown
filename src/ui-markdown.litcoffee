@@ -46,5 +46,3 @@ Layout with converted markdown
 ##Polymer Lifecycle
 
       ready: () ->
-        trimmedMarkdown = @trimIndents this.innerHTML
-        @markdown = marked trimmedMarkdown
