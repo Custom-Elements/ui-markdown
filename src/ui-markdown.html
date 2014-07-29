@@ -1,13 +1,17 @@
-<link rel="import" href="../lib/core-xhr.html">
-<polymer-element name="ui-markdown" attributes="urls">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+<polymer-element name="ui-markdown" attributes="url">
   <template>
+    {{markdown}}
 
-    <!-- converted content -->
-    <convertedContent id="el"></convertedContent>
-
-    <!-- download the markdown, if specifie -->
-    <core-xhr id="xhr"></core-xhr>
+    <!-- download the markdown, if specified -->
+    <core-ajax
+      auto
+      url={{url}}
+      handleAs='json'
+      response="{{markdown}}">
+    </core-ajax>
 
   </template>
   <script src="./ui-markdown.litcoffee"></script>
+
 </polymer-element>

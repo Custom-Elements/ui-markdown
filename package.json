@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "marked": "^0.3.2",
-    "es6-promise": "^1.0.0",
     "polymer-build": "",
     "polymer": "git://github.com/custom-elements/polymer#master",
     "ui-fonts": "git://github.com/custom-elements/ui-fonts#master",
