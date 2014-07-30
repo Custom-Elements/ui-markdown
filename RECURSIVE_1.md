@@ -1,3 +1,3 @@
 __Hello World__
 
-<ui-markdown urls='./RECURSIVE_2.md'></ui-markdown>
+<ui-markdown url='./RECURSIVE_2.md'></ui-markdown>

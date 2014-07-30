@@ -6,6 +6,7 @@ Polymer element which loads inline or referenced markdown.
 1.  Initialize the element
 
   ```
+  $ bower install
   $ npm install
   $ npm test
   ```

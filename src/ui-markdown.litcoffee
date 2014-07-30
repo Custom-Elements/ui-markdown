@@ -11,38 +11,48 @@ Layout with converted markdown
 
 ##Methods
 
-      getNextHigherLevelHost: (element) ->
+      ajaxHandler: (event, data) ->
+        if @checkForNoCyclicDependencies @url, @
+          @bindMarkdown data.response
+
+      observe:
+        '$.markdown.innerHTML': 'innerHTMLChanged'
+
+      innerHTMLChanged: (oldValue, newValue) ->
+        @bindMarkdown @trimIndents(newValue)
+
+      bindMarkdown: (markdown) ->
+          @$.markdown.innerHTML = marked markdown
+
+      getHost: (element) ->
         if element is null
           return null
         else if element.nodeName is "#document-fragment"
           return element.host
         else
-          return @getNextHigherLevelHost element.parentNode
+          return @getHost element.parentNode
 
-      getHigherLevelUrls: (urls, element) ->
-        element = @getNextHigherLevelHost element
-        if element is null
-          return urls
-        else
-          urlString = element.getAttribute 'urls'
-          urls = urls.concat urlString.split ' '
-          return @getHigherLevelUrls urls, element
-
-      checkForNoCyclicDependencies: (url) ->
-        url = @getHigherLevelUrls [], @
-        for checkUrl in urls
-          if checkUrl is url
-            console.log 'cyclic dependency reference with url: ' + url
+      checkForNoCyclicDependencies: (testUrl, element) ->
+        hostElement = @getHost element
+        if hostElement isnt null
+          hostUrl = hostElement.getAttribute 'url'
+          if testUrl is hostUrl
+            console.log('hi')
             return false
+          else if hostElement.parentNode?
+            return @checkForNoCyclicDependencies testUrl, hostElement
+          else
+            return true
         return true
 
       trimIndents: (text) ->
-        offset = text.length - text.trimLeft().length
-        extraWhitespace = this.innerHTML.substr 0, offset
-        return text.replace(extraWhitespace,'','g')
+        firstLineOffset = text.length - text.trimLeft().length
+        extraWhitespace = this.innerHTML.substr 0, firstLineOffset
+        return text.replace extraWhitespace, '', 'g'
 
 ##Event Handlers
 
 ##Polymer Lifecycle
 
       ready: () ->
+        @bindMarkdown @trimIndents(this.textContent)

@@ -1,20 +1,18 @@
-<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
-<polymer-element name="ui-markdown" attributes="url">
+<link rel='import' href='../bower_components/core-ajax/core-ajax.html'>
+<polymer-element name='ui-markdown' attributes='url'>
   <template>
 
-    <content>
-      {{markdown}}
-    </content>
+    <div id='markdown'></div>
 
     <!-- download the markdown, if specified -->
     <core-ajax
       auto
       url={{url}}
       handleAs='json'
-      response="{{markdown}}">
+      on-core-response='{{ajaxHandler}}'>
     </core-ajax>
 
   </template>
-  <script src="./ui-markdown.litcoffee"></script>
+  <script src='./ui-markdown.litcoffee'></script>
 
 </polymer-element>
