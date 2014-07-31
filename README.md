@@ -3,10 +3,15 @@ Polymer element which loads inline or referenced markdown.
 
 ## Getting Started
 
+1.  Install bower(do once)
+
+  ```
+  $ npm install -g bower
+  ```
+
 1.  Initialize the element
 
   ```
-  $ bower install
   $ npm install
   $ npm test
   ```
