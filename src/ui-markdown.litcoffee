@@ -19,7 +19,7 @@ Layout with converted markdown
         '$.markdown.innerHTML': 'innerHTMLChanged'
 
       innerHTMLChanged: (oldValue, newValue) ->
-        @bindMarkdown @trimIndents(newValue)
+        @bindMarkdown newValue
 
       bindMarkdown: (markdown) ->
           @$.markdown.innerHTML = marked markdown
@@ -45,14 +45,9 @@ Layout with converted markdown
             return true
         return true
 
-      trimIndents: (text) ->
-        firstLineOffset = text.length - text.trimLeft().length
-        extraWhitespace = this.innerHTML.substr 0, firstLineOffset
-        return text.replace extraWhitespace, '', 'g'
-
 ##Event Handlers
 
 ##Polymer Lifecycle
 
       ready: () ->
-        @bindMarkdown @trimIndents(this.textContent)
+        @bindMarkdown this.textContent
