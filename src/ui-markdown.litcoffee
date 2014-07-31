@@ -19,7 +19,7 @@ Layout with converted markdown
         '$.markdown.innerHTML': 'innerHTMLChanged'
 
       innerHTMLChanged: (oldValue, newValue) ->
-        @bindMarkdown newValue
+        @bindMarkdown @trimIndents(newValue)
 
       bindMarkdown: (markdown) ->
           @$.markdown.innerHTML = marked markdown
@@ -45,9 +45,20 @@ Layout with converted markdown
             return true
         return true
 
+      trimIndents: (text) ->
+        textComponents = text.split(/[\n\r]+/)
+        trimmedTextComponents = []
+        firstLineOffset = null
+        for textComponent in textComponents
+          if textComponent.length > 0
+            if !firstLineOffset?
+              firstLineOffset = textComponent.length-textComponent.trimLeft().length
+            trimmedTextComponents.push textComponent.substr(firstLineOffset,textComponent.length)
+        return trimmedTextComponents.join('\n')
+
 ##Event Handlers
 
 ##Polymer Lifecycle
 
       ready: () ->
-        @bindMarkdown this.textContent
+        @bindMarkdown @trimIndents(this.textContent)
