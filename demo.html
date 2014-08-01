@@ -11,6 +11,7 @@
     <style>
       body {
         font-family: "Helvetica Neue", "Helvetica", Arial;
+        padding: 2em;
       }
     </style>
   </head>
@@ -21,27 +22,22 @@
     <span>Render inline markdown</span>
   </p>
   <ui-markdown>
+    <inline>
     __Hello World__
-    1. I am inline content
-    1. I am also inline content
+    * I am inline content
+    * I am also inline content
+    </inline>
   </ui-markdown>
   <br/>
   <br/>
 
   <p>
     <strong>Example 2</strong><br/>
-    <span>Load this Project's README.md</span>
+    <span>Import content</span>
   </p>
-  <ui-markdown url='./README.md'></ui-markdown>
-  <br/>
-  <br/>
-
-
-  <p>
-    <strong>Example 3</strong><br/>
-    <span>Load RECURSIVE_1.md, which contains a reference to RECURSIVE_2.md, which in turn contains a reference to RECURSIVE_1.md, resulting in potentially infinite recursion, which ui-markdown prevents</span>
-  </p>
-  <ui-markdown url='./RECURSIVE_1.md'></ui-markdown>
+  <ui-markdown>
+    <link rel="import" href="./CONTENT.md" skip-import>
+  </ui-markdown>
   <br/>
   <br/>
 

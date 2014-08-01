@@ -1,52 +1,35 @@
 #ui-markdown-layout
-Layout with converted markdown
+Renders markdown into HTML content based on markdown source text provided
+in the light dom.
 
     marked = require 'marked'
+    _ = require 'lodash'
+    bonzo = require 'bonzo'
 
     Polymer 'ui-markdown',
 
 ##Events
+###changed
+Fired when light dom source markdown is updated.
 
 ##Attributes and Change Handlers
 
 ##Methods
 
-      ajaxHandler: (event, data) ->
-        if @checkForNoCyclicDependencies @url, @
-          @bindMarkdown data.response
-
-      observe:
-        '$.markdown.innerHTML': 'innerHTMLChanged'
-
-      innerHTMLChanged: (oldValue, newValue) ->
-        @bindMarkdown @trimIndents(newValue)
+      clearMarkdown: ->
+        bonzo(@querySelectorAll('section[rendered]')).remove()
 
       bindMarkdown: (markdown) ->
-          @$.markdown.innerHTML = marked markdown
+        content = marked @trimIndents(markdown)
+        bonzo(@).append "<section rendered>#{content}</section>"
+        @fire 'changed'
 
-      getHost: (element) ->
-        if element is null
-          return null
-        else if element.nodeName is "#document-fragment"
-          return element.host
-        else
-          return @getHost element.parentNode
-
-      checkForNoCyclicDependencies: (testUrl, element) ->
-        hostElement = @getHost element
-        if hostElement isnt null
-          hostUrl = hostElement.getAttribute 'url'
-          if testUrl is hostUrl
-            console.log('hi')
-            return false
-          else if hostElement.parentNode?
-            return @checkForNoCyclicDependencies testUrl, hostElement
-          else
-            return true
-        return true
+###trimIndents
+The goal here is to find the indent on the first line, then trim off similar
+leading indentation on the remaining lines.
 
       trimIndents: (text) ->
-        textComponents = text.split(/[\n\r]+/)
+        textComponents = text.split(/[\n]+/)
         trimmedTextComponents = []
         firstLineOffset = null
         for textComponent in textComponents
@@ -61,4 +44,8 @@ Layout with converted markdown
 ##Polymer Lifecycle
 
       ready: () ->
-        @bindMarkdown @trimIndents(this.textContent)
+        render = =>
+          @clearMarkdown()
+          @bindMarkdown @textContent
+          @onMutation @, render
+        render()
