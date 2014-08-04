@@ -11,9 +11,8 @@ Customized rendering.
     renderer = new marked.Renderer()
     renderer.code = (code, language) ->
       "<ui-code language='#{language}'>#{code}</ui-code>"
-    renderer.codespan = (code) ->
-      "<ui-code inline>#{code}</ui-code>"
-
+    renderer.listitem = (text) ->
+      "<li dotted>#{text}</li>"
     Polymer 'ui-markdown',
 
 ##Events
