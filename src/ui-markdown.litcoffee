@@ -6,6 +6,14 @@ in the light dom.
     _ = require 'lodash'
     bonzo = require 'bonzo'
 
+Customized rendering.
+
+    renderer = new marked.Renderer()
+    renderer.code = (code, language) ->
+      "<ui-code language='#{language}'>#{code}</ui-code>"
+    renderer.codespan = (code) ->
+      "<ui-code inline>#{code}</ui-code>"
+
     Polymer 'ui-markdown',
 
 ##Events
@@ -20,7 +28,7 @@ Fired when light dom source markdown is updated.
         bonzo(@querySelectorAll('section[rendered]')).remove()
 
       bindMarkdown: (markdown) ->
-        content = marked @trimIndents(markdown)
+        content = marked @trimIndents(markdown), renderer: renderer
         bonzo(@).append "<section rendered>#{content}</section>"
         @fire 'changed'
 
@@ -29,15 +37,15 @@ The goal here is to find the indent on the first line, then trim off similar
 leading indentation on the remaining lines.
 
       trimIndents: (text) ->
-        textComponents = text.split(/[\n]+/)
+        lines = text.split(/[\n]/)
         trimmedTextComponents = []
-        firstLineOffset = null
-        for textComponent in textComponents
-          if textComponent.length > 0
-            if !firstLineOffset?
-              firstLineOffset = textComponent.length-textComponent.trimLeft().length
-            trimmedTextComponents.push textComponent.substr(firstLineOffset,textComponent.length)
-        return trimmedTextComponents.join('\n')
+        for line in lines
+          console.log line
+          if line.trim().length > 0 and not firstLineOffset?
+            firstLineOffset = line.length-line.trimLeft().length
+            console.log firstLineOffset
+          trimmedTextComponents.push line.substr(firstLineOffset)
+        trimmedTextComponents.join('\n')
 
 ##Event Handlers
 
