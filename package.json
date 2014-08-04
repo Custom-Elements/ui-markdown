@@ -12,7 +12,6 @@
   },
   "license": "ISC",
   "scripts": {
-    "postinstall": "bower install",
     "test": "polymer-build watch . src/ build/"
   }
 }
