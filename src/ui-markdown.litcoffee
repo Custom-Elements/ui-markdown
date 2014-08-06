@@ -39,10 +39,8 @@ leading indentation on the remaining lines.
         lines = text.split(/[\n]/)
         trimmedTextComponents = []
         for line in lines
-          console.log line
           if line.trim().length > 0 and not firstLineOffset?
             firstLineOffset = line.length-line.trimLeft().length
-            console.log firstLineOffset
           trimmedTextComponents.push line.substr(firstLineOffset)
         trimmedTextComponents.join('\n')
 
