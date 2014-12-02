@@ -20,6 +20,11 @@ Customized rendering.
 Fired when light dom source markdown is updated.
 
 ##Attributes and Change Handlers
+###value
+This is an alternate to putting inline content, useful for data binding.
+
+      valueChanged: ->
+        @render()
 
 ##Methods
 
@@ -30,6 +35,10 @@ Fired when light dom source markdown is updated.
         content = marked @trimIndents(markdown), renderer: renderer
         bonzo(@).append "<section rendered>#{content}</section>"
         @fire 'changed'
+
+      render: ->
+        @clearMarkdown()
+        @bindMarkdown @value or @textContent
 
 ###trimIndents
 The goal here is to find the indent on the first line, then trim off similar
@@ -49,8 +58,5 @@ leading indentation on the remaining lines.
 ##Polymer Lifecycle
 
       ready: () ->
-        render = =>
-          @clearMarkdown()
-          @bindMarkdown @textContent
-          @onMutation @, render
-        render()
+        @onMutation @$.markdown, @render
+        @render()
