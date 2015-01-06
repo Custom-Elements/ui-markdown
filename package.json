@@ -5,14 +5,14 @@
     "bonzo": "^2.0.0",
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
+    "polymer-serve": "git://github.com/custom-elements/polymer-serve",
     "polymer": "git://github.com/custom-elements/polymer#master",
-    "polymer-build": "",
     "ui-fonts": "git://github.com/custom-elements/ui-fonts#master",
     "ui-code": "git://github.com/custom-elements/ui-code#master",
     "ui-styles": "git://github.com/custom-elements/ui-styles#master"
   },
   "license": "ISC",
   "scripts": {
-    "test": "polymer-build watch . src/ build/"
+    "test": "polymer-serve ."
   }
 }
