@@ -3,8 +3,6 @@ Renders markdown into HTML content based on markdown source text provided
 in the light dom.
 
     marked = require 'marked'
-    _ = require 'lodash'
-    bonzo = require 'bonzo'
 
 Customized rendering.
 
@@ -29,11 +27,15 @@ This is an alternate to putting inline content, useful for data binding.
 ##Methods
 
       clearMarkdown: ->
-        bonzo(@querySelectorAll('section[rendered]')).remove()
+        rendered = @querySelector 'section[rendered]'
+        rendered?.parentNode?.removeChild rendered
 
       bindMarkdown: (markdown) ->
         content = marked @trimIndents(markdown), renderer: renderer
-        bonzo(@).append "<section rendered>#{content}</section>"
+        rendered = document.createElement 'section'
+        rendered.setAttribute 'rendered', ''
+        rendered.innerHTML = content
+        @appendChild rendered
         @fire 'changed'
 
       render: ->
